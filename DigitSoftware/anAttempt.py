@@ -49,3 +49,5 @@ for meth in methods:
     plt.title('Detected Point'), plt.xticks([]), plt.yticks([])
     plt.suptitle(meth)
     plt.show()
+
+#gotem broooooo

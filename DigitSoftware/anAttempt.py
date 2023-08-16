@@ -50,4 +50,4 @@ for meth in methods:
     plt.suptitle(meth)
     plt.show()
 
-#gotem broooooo
+#balls

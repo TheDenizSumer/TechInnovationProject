@@ -19,7 +19,7 @@ w, h = template.shape[::-1]
 
 #method = 'cv.TM_SQDIFF_NORMED'
 methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR', 'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
-
+#
 for meth in methods:
     img = img2.copy()
     method = eval(meth)

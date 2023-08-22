@@ -1,6 +1,11 @@
 http://what-when-how.com/the-finite-element-method/fem-for-two-dimensional-solids-finite-element-method-part-2/
 
 
+<<<<<<< HEAD
 OoOOoOOo I made changes
 
 I made another change
+=======
+
+Hello how are you
+>>>>>>> 8df70ee56c58a0031837876f78eb2997934e7d86

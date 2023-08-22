@@ -30,6 +30,9 @@ git remote rm origin - removes
 
 git push origin master
 
+
+git pull url - is much better
+
 git clone url - this clone the github project into your dir
 
 git clone -b <branch> <url> - this clones a specific directory of the github project into your dir

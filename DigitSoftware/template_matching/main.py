@@ -10,8 +10,8 @@ def getColorMask(img):
     #DICex
     #522 103     
     # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
-    lower = np.array([111,  9,  47]) 
-    upper = np.array([171, 49, 127])
+    lower = np.array([ 36, 219,  84]) 
+    upper = np.array([ 66, 239, 124])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
     #cv2.imshow("out", out)
@@ -36,7 +36,7 @@ def distance(x, y, px, py):
 
 
 
-cap = cv2.VideoCapture('bench_vice.mp4')
+cap = cv2.VideoCapture('IMG_8622.MOV')
 
 if (cap.isOpened()== False): 
     print("Error opening video stream or file")

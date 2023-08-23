@@ -18,9 +18,13 @@ def getColorMask(img):
     #cv2.imshow("Input", img)
     return out
 
+#8/23/23 :
+# [ 33 224  66] [  3 204  26] [ 63 244 106]
+
 def dilate(out):
     kernel=np.ones((3,3),np.uint8)
     dilated=cv2.dilate(out,kernel,iterations=3)
+    cv2.imshow(dilated)
     return dilated
 
 def get_contours(dilated_image):
@@ -46,11 +50,11 @@ frames = 0
 while(cap.isOpened()):
     ret, frame = cap.read()
     if ret == True:
-        cv2.imshow('Frame',frame)
+        #cv2.imshow('Frame',frame)
         images.append(frame)
         frames += 1
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
+        #if cv2.waitKey(25) & 0xFF == ord('q'):
+        #    break
     else: 
         break
 if len(images) == frames:

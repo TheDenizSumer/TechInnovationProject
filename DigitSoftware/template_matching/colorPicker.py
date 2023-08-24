@@ -26,12 +26,14 @@ def pick_color(event,x,y,flags,param):
 def main():
     import sys
     global image_hsv, pixel # so we can use it in mouse callback
-    cap = cv2.VideoCapture('IMG_8622.MOV')
+    cap = cv2.VideoCapture('deform2.MOV')
     ret, frame = cap.read()
     image_src = frame  # pick.py my.png
     image_src = cv2.resize(image_src, (1000, 750))
     
     #image_src = cv2.imread('plastic_wrap.png')
+    if ret:
+        print('yay')
     if image_src is None:
         print ("the image read is None............")
         return

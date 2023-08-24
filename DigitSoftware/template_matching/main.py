@@ -10,8 +10,9 @@ def getColorMask(img):
     #DICex
     #522 103     
     # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
-    lower = np.array([ 36, 219,  84]) 
-    upper = np.array([ 66, 239, 124])
+    #8/23 [ 42 255  35] [ 12 235  -5] [ 72 275  75]
+    lower = np.array([ 42, 255,  35] ) 
+    upper = np.array([ 72, 275,  75])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
     #cv2.imshow("out", out)
@@ -24,7 +25,7 @@ def getColorMask(img):
 def dilate(out):
     kernel=np.ones((3,3),np.uint8)
     dilated=cv2.dilate(out,kernel,iterations=3)
-    cv2.imshow(dilated)
+    #cv2.imshow(dilated)
     return dilated
 
 def get_contours(dilated_image):
@@ -40,7 +41,7 @@ def distance(x, y, px, py):
 
 
 
-cap = cv2.VideoCapture('IMG_8622.MOV')
+cap = cv2.VideoCapture('deform2.MOV')
 
 if (cap.isOpened()== False): 
     print("Error opening video stream or file")
@@ -49,12 +50,14 @@ images = []
 frames = 0
 while(cap.isOpened()):
     ret, frame = cap.read()
+    #frame = cv2.resize(frame, (1000, 750))
     if ret == True:
         #cv2.imshow('Frame',frame)
         images.append(frame)
         frames += 1
         #if cv2.waitKey(25) & 0xFF == ord('q'):
         #    break
+        
     else: 
         break
 if len(images) == frames:

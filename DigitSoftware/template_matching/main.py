@@ -11,8 +11,8 @@ def getColorMask(img):
     #522 103     
     # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
     #8/23 [ 42 255  35] [ 12 235  -5] [ 72 275  75]
-    lower = np.array([ 42, 255,  35] ) 
-    upper = np.array([ 72, 275,  75])
+    lower = np.array([ 0, 0,  0] ) 
+    upper = np.array([ 61, 255,  66])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
     #cv2.imshow("out", out)
@@ -43,6 +43,11 @@ def distance(x, y, px, py):
 
 cap = cv2.VideoCapture('deform2.MOV')
 
+frame_width = int(cap.get(3))
+frame_height = int(cap.get(4))
+   
+size = (frame_width, frame_height)
+
 if (cap.isOpened()== False): 
     print("Error opening video stream or file")
 
@@ -50,9 +55,10 @@ images = []
 frames = 0
 while(cap.isOpened()):
     ret, frame = cap.read()
-    #frame = cv2.resize(frame, (1000, 750))
+    
     if ret == True:
         #cv2.imshow('Frame',frame)
+        #frame = cv2.resize(frame, (960, 540))
         images.append(frame)
         frames += 1
         #if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -103,16 +109,17 @@ for image in images:
     else:
         information.append(cont)
     
-
+result = cv2.VideoWriter('filename.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, size)
 xx= 0
 for info in information:
     for point in info:
         cv2.circle(images[xx], (point[1], point[2]), 2, (0, 0, 255), -1)
         cv2.putText(images[xx], str(point[0]), (point[1]-9, point[2]-9),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        result.write(images[xx])
     cv2.imshow("hope this works",images[xx])
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
-    
+    result.write(frame)
     
     xx += 1
 

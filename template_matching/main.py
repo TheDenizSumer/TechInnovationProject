@@ -41,7 +41,7 @@ def distance(x, y, px, py):
 
 
 
-cap = cv2.VideoCapture('IMG_8632.MOV')
+cap = cv2.VideoCapture('deform_purple.mov')
 
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))

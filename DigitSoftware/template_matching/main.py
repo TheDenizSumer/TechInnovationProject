@@ -11,8 +11,8 @@ def getColorMask(img):
     #522 103     
     # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
     #8/23 [ 42 255  35] [ 12 235  -5] [ 72 275  75]
-    lower = np.array([ 0, 0,  0] ) 
-    upper = np.array([ 61, 255,  66])
+    lower = np.array([ 12, 161, 38] ) 
+    upper = np.array([ 62, 255,  83])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
     #cv2.imshow("out", out)
@@ -41,7 +41,7 @@ def distance(x, y, px, py):
 
 
 
-cap = cv2.VideoCapture('deform2.MOV')
+cap = cv2.VideoCapture('IMG_8632.MOV')
 
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
@@ -115,11 +115,10 @@ for info in information:
     for point in info:
         cv2.circle(images[xx], (point[1], point[2]), 2, (0, 0, 255), -1)
         cv2.putText(images[xx], str(point[0]), (point[1]-9, point[2]-9),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-        result.write(images[xx])
     cv2.imshow("hope this works",images[xx])
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
-    result.write(frame)
+    result.write(images[xx])
     
     xx += 1
 

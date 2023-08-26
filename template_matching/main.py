@@ -13,7 +13,6 @@ def getColorMask(img):
 def dilate(out):
     kernel=np.ones((3,3),np.uint8)
     dilated=cv2.dilate(out,kernel,iterations=3)
-    #cv2.imshow(dilated)
     return dilated
 
 def get_contours(dilated_image):
@@ -31,8 +30,8 @@ def distance(x, y, px, py):
 
 cap = cv2.VideoCapture('deform_purple.mov')
 
-frame_width = int(cap.get(3))
-frame_height = int(cap.get(4))
+
+frame_width, frame_height = int(cap.get(3)), int(cap.get(4))
    
 size = (frame_width, frame_height)
 
@@ -49,8 +48,6 @@ while(cap.isOpened()):
         #frame = cv2.resize(frame, (960, 540))
         images.append(frame)
         frames += 1
-        #if cv2.waitKey(25) & 0xFF == ord('q'):
-        #    break
         
     else: 
         break

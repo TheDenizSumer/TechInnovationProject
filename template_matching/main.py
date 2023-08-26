@@ -4,23 +4,11 @@ import os
 import math 
 
 def getColorMask(img):
-    #[
-    #lower = np.array([34, 174, 136])
-    #upper = np.array([54, 194, 216])
-    #DICex
-    #522 103     
-    # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
-    #8/23 [ 42 255  35] [ 12 235  -5] [ 72 275  75]
     lower = np.array([ 12, 161, 38] ) 
     upper = np.array([ 62, 255,  83])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
-    #cv2.imshow("out", out)
-    #cv2.imshow("Input", img)
     return out
-
-#8/23/23 :
-# [ 33 224  66] [  3 204  26] [ 63 244 106]
 
 def dilate(out):
     kernel=np.ones((3,3),np.uint8)

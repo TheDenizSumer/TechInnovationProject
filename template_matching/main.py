@@ -72,7 +72,6 @@ else:
     print(f'Images: {len(images)}')
     print(f'Frames: {frames}')
 
-input('')
 
 information = []
 
@@ -109,7 +108,7 @@ for image in images:
     else:
         information.append(cont)
     
-result = cv2.VideoWriter('computed_colormasking.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, size)
+#result = cv2.VideoWriter('computed_colormasking.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, size)
 xx= 0
 for info in information:
     for point in info:
@@ -118,7 +117,7 @@ for info in information:
     cv2.imshow("hope this works",images[xx])
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
-    result.write(images[xx])
+    #result.write(images[xx])
     
     xx += 1
 

@@ -11,7 +11,7 @@ def getColorMask(img):
     #522 103     
     # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
     #8/23 [ 42 255  35] [ 12 235  -5] [ 72 275  75]
-    lower = np.array([ 12, 161, 38] ) 
+    lower = np.array([ 9, 161, 38] ) 
     upper = np.array([ 62, 255,  83])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
@@ -29,7 +29,7 @@ def dilate(out):
     return dilated
 
 def get_contours(dilated_image):
-    contours,_ = cv2.findContours(dilated_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours,_ = cv2.findContours(dilated_image, cv.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours=[cv2.boundingRect(cnt) for cnt in contours]
     return contours
 

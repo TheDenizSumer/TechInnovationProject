@@ -96,6 +96,7 @@ for i in range(num_nodes):
 ###############################
 print('solving linear system')
 u = np.linalg.solve(K, f)
+
 print('max u=', max(u))
 ###############################
 print('plotting displacement')

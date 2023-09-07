@@ -11,15 +11,21 @@ def getColorMask(img):
     #522 103     
     # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
     #8/23 [ 42 255  35] [ 12 235  -5] [ 72 275  75]
-    lower = np.array([ 12, 161, 38] ) 
+    lower = np.array([ 9, 161, 38] ) 
     upper = np.array([ 62, 255,  83])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
+    #cv2.imshow("out", out)
+    #cv2.imshow("Input", img)
     return out
+
+#8/23/23 :
+# [ 33 224  66] [  3 204  26] [ 63 244 106]
 
 def dilate(out):
     kernel=np.ones((3,3),np.uint8)
     dilated=cv2.dilate(out,kernel,iterations=3)
+    #cv2.imshow(dilated)
     return dilated
 
 def get_contours(dilated_image):
@@ -37,8 +43,8 @@ def distance(x, y, px, py):
 
 cap = cv2.VideoCapture('deform_purple.mov')
 
-
-frame_width, frame_height = int(cap.get(3)), int(cap.get(4))
+frame_width = int(cap.get(3))
+frame_height = int(cap.get(4))
    
 size = (frame_width, frame_height)
 
@@ -55,6 +61,8 @@ while(cap.isOpened()):
         #frame = cv2.resize(frame, (960, 540))
         images.append(frame)
         frames += 1
+        #if cv2.waitKey(25) & 0xFF == ord('q'):
+        #    break
         
     else: 
         break
@@ -64,6 +72,7 @@ else:
     print(f'Images: {len(images)}')
     print(f'Frames: {frames}')
 
+input('')
 
 information = []
 
@@ -100,7 +109,7 @@ for image in images:
     else:
         information.append(cont)
     
-#result = cv2.VideoWriter('computed_colormasking.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, size)
+result = cv2.VideoWriter('computed_colormasking.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, size)
 xx= 0
 for info in information:
     for point in info:
@@ -109,7 +118,7 @@ for info in information:
     cv2.imshow("hope this works",images[xx])
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
-    #result.write(images[xx])
+    result.write(images[xx])
     
     xx += 1
 

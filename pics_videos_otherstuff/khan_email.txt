@@ -1,3 +1,20 @@
 http://what-when-how.com/the-finite-element-method/fem-for-two-dimensional-solids-finite-element-method-part-2/
 
-button
+Okay, so the more I think about it, trying to use the deformation gradient and then getting into partial derivatives, it's going to be more trouble than it's worth for you. You will have to get into some finite-difference type techniques and honestly it's a can of worms. Here's my simpler hack - the only downside is that it becomes upset for LARGE deformations, but still works very well for small deformations. 
+
+Basically, define the strains simply as
+
+exx = du/dx
+eyy = dv/dy
+txy = du/dy + dv/dx (this part is easy peasy)
+
+Now, if you have the displacements at all four corners of your grid, i.e., deltax1, deltay1, deltax2... 
+
+use the shape functions (see top right slide on page 4 of the attached PDF) to calculate the displacement at any point, i.e., 
+
+u(x,y) = deltax1 X N1 + deltax2 X N2... 
+v(x,y) = deltay1 X N1 + deltay2 X N2.... 
+
+then you have u and v as functions of x and y, at any point within the grid. Simply use the exx, eyy, and txy formulas and you're done!
+
+Amit

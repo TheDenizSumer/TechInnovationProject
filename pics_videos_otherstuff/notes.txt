@@ -36,3 +36,6 @@ git pull url - is much better
 git clone url - this clone the github project into your dir
 
 git clone -b <branch> <url> - this clones a specific directory of the github project into your dir
+
+
+https://github.com/abidrahmank/OpenCV-Python.git

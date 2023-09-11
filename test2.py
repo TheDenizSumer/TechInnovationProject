@@ -121,14 +121,3 @@ print(v(3, 3, a, b, square_undeformed, square_deformed))
 
 
 
-origin = square_undeformed
-transposed = square_deformed
-
-a = 4
-b = 4
-
-
-def u(x,y):
-    return (transposed[0][0]-origin[0][0])*(1/(4*a*b))*(x-origin[1][0])*(y-origin[3][1]) + (transposed[1][0]-origin[1][0])(-1*(1/(4*a*b))*(x-origin[0][0])*(y-origin[2][1])) + (transposed[2][0]-origin[2][0])(1/(4*a*b))*(x-origin[3][0])*(y-origin[1][1]) + (transposed[3][0]-origin[3][0])(-1*(1/(4*a*b))*(x-origin[2][0])*(y-origin[0][1]))
-def v(x,y):
-    return (transposed[0][1]-origin[0][0])*(1/(4*a*b))*(x-origin[1][0])*(y-origin[3][1]) + (transposed[1][1]-origin[1][1])(-1*(1/(4*a*b))*(x-origin[0][0])*(y-origin[2][1])) + (transposed[2][1]-origin[2][1])(1/(4*a*b))*(x-origin[3][0])*(y-origin[1][1]) + (transposed[3][0]-origin[3][1])(-1*(1/(4*a*b))*(x-origin[2][0])*(y-origin[0][1]))

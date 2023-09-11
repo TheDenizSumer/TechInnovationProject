@@ -1,0 +1,41 @@
+git config --global user.name "School Computer"
+git config --global user.email "denizesumer@gmail.com"
+
+mkdir - makes directory
+
+cd "dir"
+cd..     -  navigation
+
+ls - lists all files in dir
+    -l - if you add this it gives you more info for every file
+
+whoami - displays your local username
+
+pwd - print working directory - displays current dir
+
+git help
+
+git init  - creates a hidden directory called .git
+
+git status - displays your repository's status (commits and whatnot)
+
+Version Control
+
+GITHUB
+
+doesn't work sometimes --> git remote set-url origin https://github.com/TheDenizSumer/TechInnovationProject.git    - this makes the local repostory that was made earlier into a remote one by connecting it to the github website
+
+git remote add origin https://github.com/TheDenizSumer/TechInnovationProject.git
+git remote rm origin - removes
+
+git push origin master
+
+
+git pull url - is much better
+
+git clone url - this clone the github project into your dir
+
+git clone -b <branch> <url> - this clones a specific directory of the github project into your dir
+
+
+https://github.com/abidrahmank/OpenCV-Python.git

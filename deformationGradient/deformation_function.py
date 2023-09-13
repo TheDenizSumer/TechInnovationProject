@@ -1,3 +1,6 @@
+import math
+
+
 #a = 1/2 of square starting length x
 #b = 1/2 of square starting length y
 #
@@ -52,21 +55,17 @@ def deformation(deformed, not_deformed):
 
 
 
+def square_side_calc(coords):
+    a1_2 = math.sqrt(((coords[1][0] - coords[0][0]) ** 2) + ((coords[1][1] - coords[0][1]) ** 2)) / 2
+    a4_3 = math.sqrt(((coords[2][0] - coords[3][0]) ** 2) + ((coords[2][1] - coords[3][1]) ** 2)) / 2
+    b4_1 = math.sqrt(((coords[3][1] - coords[0][1]) ** 2) + ((coords[3][0] - coords[0][0]) ** 2)) / 2
+    b2_3 = math.sqrt(((coords[2][1] - coords[1][1]) ** 2) + ((coords[2][0] - coords[1][0]) ** 2)) / 2
+    return a1_2, a4_3, b4_1, b2_3
 
-
-
-'''a1_2 = abs(square_undeformed[1][0] - square_undeformed[0][0])
-a4_3 = abs(square_undeformed[2][0] - square_undeformed[3][0])
-b4_1 = abs(square_undeformed[3][1] - square_undeformed[0][1])
-b3_2 = abs(square_undeformed[2][1] - square_undeformed[1][1])'''
-
+print(square_side_calc(square_undeformed))
 
 a = 2
 b = 2
-
-
-
-
 
 
 def N1(a, b, x, y, x2, y4):
@@ -116,19 +115,5 @@ def v(x, y, a, b, undeformed, deformed):
     return answer
 
 
-print(u(3, 3, a, b, square_undeformed, square_deformed))
-print(v(3, 3, a, b, square_undeformed, square_deformed))
-
-
-
-origin = square_undeformed
-transposed = square_deformed
-
-a = 4
-b = 4
-
-
-def u(x,y):
-    return (transposed[0][0]-origin[0][0])*(1/(4*a*b))*(x-origin[1][0])*(y-origin[3][1]) + (transposed[1][0]-origin[1][0])(-1*(1/(4*a*b))*(x-origin[0][0])*(y-origin[2][1])) + (transposed[2][0]-origin[2][0])(1/(4*a*b))*(x-origin[3][0])*(y-origin[1][1]) + (transposed[3][0]-origin[3][0])(-1*(1/(4*a*b))*(x-origin[2][0])*(y-origin[0][1]))
-def v(x,y):
-    return (transposed[0][1]-origin[0][0])*(1/(4*a*b))*(x-origin[1][0])*(y-origin[3][1]) + (transposed[1][1]-origin[1][1])(-1*(1/(4*a*b))*(x-origin[0][0])*(y-origin[2][1])) + (transposed[2][1]-origin[2][1])(1/(4*a*b))*(x-origin[3][0])*(y-origin[1][1]) + (transposed[3][0]-origin[3][1])(-1*(1/(4*a*b))*(x-origin[2][0])*(y-origin[0][1]))
+print(u(5, 3, a, b, square_undeformed, square_deformed))
+print(v(5, 3, a, b, square_undeformed, square_deformed))

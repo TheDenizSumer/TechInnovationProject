@@ -28,3 +28,5 @@ def F(transposed, origin):
     
     return F
 
+def s(s):
+    print(s)

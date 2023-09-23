@@ -107,9 +107,9 @@ def coordinates(video, frame_cap=0, remove_frames=True):
 
 
 
-def recognize_squares(coordinates):
-  squares = []
-  
-  return largest_square
+#def recognize_squares(coordinates):
+#  squares = []
+#  
+#  return largest_square
 
 print(recognize_squares(coordinates('deform_purple.mov', 135)[0][0]))

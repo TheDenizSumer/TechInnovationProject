@@ -99,6 +99,7 @@ def coordinates(video, frame_cap=0, remove_frames=True):
                     if dist < smallest_dist:
                         smallest_n, smallest_dist = prev_point[0], dist #distance calculated here
                 info.append([smallest_n, contX, contY])
+                info.sort()
             information.append(info)
         else:
             information.append(cont)
@@ -108,6 +109,11 @@ def coordinates(video, frame_cap=0, remove_frames=True):
 
 
 #frame cap 135
+
+def centroid(p1, p2, p3, p4):
+    x = (p1[0]+p2[0]+p3[0]+p4[0])/4
+    y = (p1[1]+p2[1]+p3[1]+p4[1])/4
+    return x, y
 
 
 squares = [
@@ -134,20 +140,52 @@ information, images = coordinates('deform_purple.mov', 135)
 
 
 
-# Create a grid of x and y values
-x = np.linspace(-5, 5, 100)
-y = np.linspace(-5, 5, 100)
-X, Y = np.meshgrid(x, y)
+def elements(T, NT, squares, direction=None):
+    def_element = []
+    for element in squares:
+        print('yay')
+        et = [T[element[0]], T[element[1]], T[element[2]], T[element[3]]]
+        e = [NT[element[0]], NT[element[1]], NT[element[2]], NT[element[3]]]
+        print(et, e)
+        et = [T[element[0]][1:], T[element[1]][1:], T[element[2]][1:], T[element[3]][1:]]
+        e = [NT[element[0]][1:], NT[element[1]][1:], NT[element[2]][1:], NT[element[3]][1:]]
+        print(et, e)
+        def_element.append(F(et, e))
+    return def_element
 
-# Generate some random data for the Z values
-Z = np.sin(np.sqrt(X**2 + Y**2))
-print(len(Z))
+print(elements(information[0], information[1], squares))
+        
 
-# Create a filled contour plot with a colormap
-plt.contourf(X, Y, Z, cmap='viridis')  # You can choose any colormap you prefer
-plt.xlabel('X')
-plt.ylabel('Y')
-plt.title('Contour Map with Color Mapping')
-plt.colorbar()  # Add a colorbar
+feature_x = np.linspace(0, 8, 8)
+feature_y = np.linspace(0, 8, 8)
+
+# Creating 2-D grid of features
+[X, Y] = np.meshgrid(feature_x, feature_y)
+
+print(X)
+
+fig, ax = plt.subplots(1, 1)
+
+#Z = X ** 2 + Y ** 2
+
+Z = [
+    [0, 1, 2, 3, 4, 5, 6, 7],
+    [1, 2, 3, 3, 9, 3, 3, 3],
+    [2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2],
+    [3, 4, 5, 6, 7, 2, 3, 3],
+    [5, 5, 5, 4, 3, 3, 3, 3],
+    [1, 2, 3, 3, 3, 2, 1, 4]
+]
+Z = np.array(Z)
+print(type(Z))
+# plots filled contour plot
+ax.contourf(X, Y, Z)
+
+ax.set_title('Filled Contour Plot')
+ax.set_xlabel('feature_x')
+ax.set_ylabel('feature_y')
+
 plt.show()
 

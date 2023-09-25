@@ -29,59 +29,60 @@ def F(transposed, origin):
     return F
 
 
-
-square_undeformed_green = [
-[1, 1],
-[5, 1],
-[5, 5],
-[1, 5]
-]
-
-
-square_deformed_red = [
-[1, 1],
-[9, 1],
-[9, 9],
-[1, 9]
-]
-
-square_deformed_orange = [
-[1, 1],
-[5, 1],
-[7, 5],
-[3, 5]
-]
-
-square_deformed_blue = [
-[6, 1],
-[10, 1],
-[10, 5],
-[6, 5]
-]
-
-square_deformed_purple = [
-[10 + math.sqrt(8), 1],
-[10 + 2*math.sqrt(8), 1 + math.sqrt(8)],
-[10 + math.sqrt(8), 1 + 2*math.sqrt(8)],
-[10, 1 + math.sqrt(8)]
-]
-
-square_deformed = [
-[8, 6],
-[10, 8],
-[8, 10],
-[6, 8]
-]
-
-
-
-
-print(f'Blue square : \n{F(square_deformed_blue, square_undeformed_green)}')
-print()
-print(f'Red square : \n{F(square_deformed_red, square_undeformed_green)}')
-print()
-
-print(f'Orange square : \n{F(square_deformed_orange, square_undeformed_green)}')
-
-print()
-print(f'Purple square : \n{F(square_deformed_purple, square_undeformed_green)}')
+#
+#square_undeformed_green = [
+#[1, 1],
+#[5, 1],
+#[5, 5],
+#[1, 5]
+#]
+#
+#
+#square_deformed_red = [
+#[1, 1],
+#[9, 1],
+#[9, 9],
+#[1, 9]
+#]
+#
+#square_deformed_orange = [
+#[1, 1],
+#[5, 1],
+#[7, 5],
+#[3, 5]
+#]
+#
+#square_deformed_blue = [
+#[6, 1],
+#[10, 1],
+#[10, 5],
+#[6, 5]
+#]
+#
+#square_deformed_purple = [
+#[10 + math.sqrt(8), 1],
+#[10 + 2*math.sqrt(8), 1 + math.sqrt(8)],
+#[10 + math.sqrt(8), 1 + 2*math.sqrt(8)],
+#[10, 1 + math.sqrt(8)]
+#]
+#
+#square_deformed = [
+#[8, 6],
+#[10, 8],
+#[8, 10],
+#[6, 8]
+#]
+#
+#
+#
+#
+#print(f'Blue square : \n{F(square_deformed_blue, square_undeformed_green)}')
+#print()
+#print(f'Red square : \n{F(square_deformed_red, square_undeformed_green)}')
+#print()
+#
+#print(f'Orange square : \n{F(square_deformed_orange, square_undeformed_green)}')
+#
+#print()
+#print(f'Purple square : \n{F(square_deformed_purple, square_undeformed_green)}')
+#

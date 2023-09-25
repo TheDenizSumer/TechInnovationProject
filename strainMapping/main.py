@@ -3,6 +3,7 @@ import math
 import numpy as np
 import cv2
 import os
+import matplotlib.pyplot as plt
 import math 
 from statistics import mode
 
@@ -58,7 +59,7 @@ def coordinates(video, frame_cap=0, remove_frames=True):
         else: 
             break
     if len(images) == frames:
-        print('Good to go')
+        print('Images_Processed')
     else:
         print(f'Images: {len(images)}')
         print(f'Frames: {frames}')
@@ -106,10 +107,47 @@ def coordinates(video, frame_cap=0, remove_frames=True):
     return information, images
 
 
+#frame cap 135
 
-#def recognize_squares(coordinates):
-#  squares = []
-#  
-#  return largest_square
 
-#print(recognize_squares(coordinates('deform_purple.mov', 135)[0][0]))
+squares = [
+    [21, 22, 24, 25],
+    [22, 23, 26, 24],
+    [18, 19, 22, 21],
+    [19, 20, 23, 22],
+    [15, 16, 19, 18],
+    [16, 17, 20, 19],
+    [12, 13, 16, 15],
+    [13, 14, 17, 16],
+    [10, 9, 13, 12],
+    [9, 11, 14, 13],
+    [6, 7, 9, 10],
+    [7, 8, 11, 9],
+    [3, 4, 7, 6],
+    [4, 5, 8, 7],
+    [1, 0, 4, 3],
+    [0, 2, 5, 4]
+    ]
+
+
+information, images = coordinates('deform_purple.mov', 135)
+
+
+
+# Create a grid of x and y values
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+
+# Generate some random data for the Z values
+Z = np.sin(np.sqrt(X**2 + Y**2))
+print(len(Z))
+
+# Create a filled contour plot with a colormap
+plt.contourf(X, Y, Z, cmap='viridis')  # You can choose any colormap you prefer
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Contour Map with Color Mapping')
+plt.colorbar()  # Add a colorbar
+plt.show()
+

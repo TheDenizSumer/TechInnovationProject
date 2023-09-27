@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import math 
 from statistics import mode
 
-'''
+
 def calc_coordinates(video, frame_cap=0, remove_frames=True):
     def getColorMask(img):
         lower = np.array([ 9, 161, 38] ) 
@@ -198,3 +198,4 @@ ax.set_xlabel('feature_x')
 ax.set_ylabel('feature_y')
 
 plt.show()
+'''

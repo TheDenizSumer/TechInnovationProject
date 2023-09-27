@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import math 
 from statistics import mode
 
-def coordinates(video, frame_cap=0, remove_frames=True):
+'''
+def calc_coordinates(video, frame_cap=0, remove_frames=True):
     def getColorMask(img):
         lower = np.array([ 9, 161, 38] ) 
         upper = np.array([ 62, 255,  83])
@@ -110,7 +111,7 @@ def coordinates(video, frame_cap=0, remove_frames=True):
 
 #frame cap 135
 
-def centroid(p1, p2, p3, p4):
+def Calc_centroid(p1, p2, p3, p4):
     x = (p1[0]+p2[0]+p3[0]+p4[0])/4
     y = (p1[1]+p2[1]+p3[1]+p4[1])/4
     return x, y
@@ -136,33 +137,42 @@ squares = [
     ]
 
 
-information, images = coordinates('deform_purple.mov', 135)
+coordinates, images = calc_coordinates('deform_purple.mov', 135)
 
 
 
 def elements(T, NT, squares, direction=None):
     def_element = []
+    centroids = []
     for element in squares:
-        print('yay')
         et = [T[element[0]], T[element[1]], T[element[2]], T[element[3]]]
         e = [NT[element[0]], NT[element[1]], NT[element[2]], NT[element[3]]]
-        print(et, e)
         et = [T[element[0]][1:], T[element[1]][1:], T[element[2]][1:], T[element[3]][1:]]
         e = [NT[element[0]][1:], NT[element[1]][1:], NT[element[2]][1:], NT[element[3]][1:]]
-        print(et, e)
-        def_element.append(F(et, e))
-    return def_element
+        def_element.append(F(et, e)[0])
+        centroids.append(F(et, e)[1])
+    return def_element, centroids
 
-print(elements(information[0], information[1], squares))
-        
 
+Elements = [] # frames, e1 e2 e3 e4 e5... e27, xx xy yx yy
+Centroids = [] # frames, e1 e2 e3 e4 e5... e27, x y 
+
+for frame in range(1, len(coordinates)):
+    print(frame)
+    element, centroid = elements(coordinates[frame], coordinates[frame-1], squares)
+    Elements.append(element)
+    Centroids.append(centroid)
+
+print('done')
+print(len(coordinates))
+
+'''
 feature_x = np.linspace(0, 8, 8)
 feature_y = np.linspace(0, 8, 8)
 
 # Creating 2-D grid of features
 [X, Y] = np.meshgrid(feature_x, feature_y)
 
-print(X)
 
 fig, ax = plt.subplots(1, 1)
 
@@ -188,4 +198,3 @@ ax.set_xlabel('feature_x')
 ax.set_ylabel('feature_y')
 
 plt.show()
-

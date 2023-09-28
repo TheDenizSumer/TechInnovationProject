@@ -29,6 +29,6 @@ def F(transposed, origin):
     yx = float(diff(v, x).replace(y, ty))
     yy = float(diff(v, y).replace(x, tx))
 
-    F = np.matrix([[xx, xy], [yx, yy]])
-
+    #F = np.matrix([[xx, xy], [yx, yy]])
+    F = [[xx, xy], [yx, yy]]
     return F, [tx, ty]

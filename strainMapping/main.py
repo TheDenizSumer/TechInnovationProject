@@ -7,6 +7,34 @@ import matplotlib.pyplot as plt
 import math 
 from statistics import mode
 
+'''
+
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+  
+feature_x = np.linspace(-5.0, 3.0, 700)
+feature_y = np.linspace(-5.0, 3.0, 700)
+  
+# Creating 2-D grid of features
+[X, Y] = np.meshgrid(feature_x, feature_y)
+  
+fig, ax = plt.subplots(1, 1)
+  
+Z = X ** 2 + Y ** 2
+
+print(Z)
+# plots filled contour plot
+ax.contourf(X, Y, Z)
+  
+ax.set_title('Filled Contour Plot')
+ax.set_xlabel('feature_x')
+ax.set_ylabel('feature_y')
+  
+
+plt.show()
+'''
 
 def calc_coordinates(video, frame_cap=0, remove_frames=True):
     def getColorMask(img):
@@ -154,21 +182,20 @@ def elements(T, NT, squares, direction=None):
     return def_element, centroids
 
 
-Elements = [] # frames, e1 e2 e3 e4 e5... e27, xx xy yx yy
+Elements = [] # frames, e1 e2 e3 e4 e5... e27, [xx xy], [yx yy]
 Centroids = [] # frames, e1 e2 e3 e4 e5... e27, x y 
 
-for frame in range(1, len(coordinates)):
+for frame in range(1, 2):#len(coordinates)-132):
     print(frame)
     element, centroid = elements(coordinates[frame], coordinates[frame-1], squares)
     Elements.append(element)
     Centroids.append(centroid)
 
 print('done')
-print(len(coordinates))
 
-'''
-feature_x = np.linspace(0, 8, 8)
-feature_y = np.linspace(0, 8, 8)
+matrix_dimentions = 2, 8
+feature_x = np.linspace(0, matrix_dimentions[0], 8)
+feature_y = np.linspace(0, matrix_dimentions[1], 2)
 
 # Creating 2-D grid of features
 [X, Y] = np.meshgrid(feature_x, feature_y)
@@ -176,20 +203,28 @@ feature_y = np.linspace(0, 8, 8)
 
 fig, ax = plt.subplots(1, 1)
 
+print(ax)
+
 #Z = X ** 2 + Y ** 2
 
-Z = [
-    [0, 1, 2, 3, 4, 5, 6, 7],
-    [1, 2, 3, 3, 9, 3, 3, 3],
-    [2, 2, 2, 2, 2, 2, 2, 2],
-    [2, 2, 2, 2, 2, 2, 2, 2],
-    [2, 2, 2, 2, 2, 2, 2, 2],
-    [3, 4, 5, 6, 7, 2, 3, 3],
-    [5, 5, 5, 4, 3, 3, 3, 3],
-    [1, 2, 3, 3, 3, 2, 1, 4]
-]
+
+'''Z = [
+    [9.71698113e-03  7.18415766e-06  0.00000000e+00  9.41786607e-03 1.00722847e-02 -9.90617203e-03  1.98168613e-02 -1.03999967e-02]
+    [9.71698113e-03  7.18415766e-06  0.00000000e+00  9.41786607e-03, 1.00722847e-02 -9.90617203e-03  1.98168613e-02 -1.03999967e-02]]
 Z = np.array(Z)
-print(type(Z))
+'''
+
+Z = []
+frame = 0
+for i in range(matrix_dimentions[0]):
+    Z.append([])
+    for q in range(matrix_dimentions[1]):
+        Z[-1].append(Elements[frame][q+i*(matrix_dimentions[1])][1][1])
+Z = np.array(Z)
+
+print(Z)
+
+
 # plots filled contour plot
 ax.contourf(X, Y, Z)
 
@@ -198,4 +233,3 @@ ax.set_xlabel('feature_x')
 ax.set_ylabel('feature_y')
 
 plt.show()
-'''

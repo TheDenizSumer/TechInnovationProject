@@ -185,11 +185,11 @@ def elements(T, NT, squares, direction=None):
 Elements = [] # frames, e1 e2 e3 e4 e5... e27, [xx xy], [yx yy]
 Centroids = [] # frames, e1 e2 e3 e4 e5... e27, x y 
 
-for frame in range(1, 2):#len(coordinates)-132):
+'''for frame in range(1, 90):#len(coordinates)-132):
     print(frame)
     element, centroid = elements(coordinates[frame], coordinates[frame-1], squares)
     Elements.append(element)
-    Centroids.append(centroid)
+    Centroids.append(centroid)'''
 
 print('done')
 
@@ -214,12 +214,18 @@ print(ax)
 Z = np.array(Z)
 '''
 
+
+asdf, baba = elements(coordinates[90], coordinates[0], squares)
+print(asdf)
+
+
 Z = []
 frame = 0
 for i in range(matrix_dimentions[0]):
     Z.append([])
     for q in range(matrix_dimentions[1]):
-        Z[-1].append(Elements[frame][q+i*(matrix_dimentions[1])][1][1])
+        #Z[-1].append(Elements[frame][q+i*(matrix_dimentions[1])][1][1])
+        Z[-1].append(asdf[q+i*(matrix_dimentions[1])][0][0])
 Z = np.array(Z)
 
 print(Z)

@@ -1,4 +1,4 @@
-import math
+'''import math
 
 
 #a = 1/2 of square starting length x
@@ -119,7 +119,7 @@ print(u(5, 3, a, b, square_undeformed, square_deformed))
 print(v(5, 3, a, b, square_undeformed, square_deformed))
 
 
-
+'''
 
 #grouped:
 
@@ -150,8 +150,15 @@ def F(transposed, origin):
     #u(x, y) = function of x & y returns relative x displacment in element
     #v(x, y) = function of x & y returns relative y displacment in element
 
-    #Tx, Ty = centroid(transposed[0], transposed[1], transposed[2], transposed[3])
+    #tx, ty = centroid(transposed[0], transposed[1], transposed[2], transposed[3])
     tx, ty = centroid(origin[0], origin[1], origin[2], origin[3])
+    #ty = ty * .25
+    print(u)
+    print(v)
+    print(diff(u, x))
+    print(diff(u, y))
+    print(diff(v, x))
+    print(diff(v, y))
 
     xx = float(diff(u, x).replace(y, ty))
     xy = float(diff(u, y).replace(x, tx))
@@ -247,7 +254,7 @@ print(f'Purple square : \n{F(square_deformed_purple, square_undeformed_green)}')
 print()
 print(f'sdjdnkajs square : \n{F(square_undeformed_green, square_deformed_red)}')
 
-X = [
+'''X = [
     [896, 386], 
     [947, 383], 
     [947, 330], 
@@ -256,8 +263,39 @@ X = [
 x = [
     [896, 387], 
     [947, 384], 
-    [926, 331], 
+    [946, 331], 
     [897, 332]
-    ]#transposed
+    ]#transposed'''
 
-print(F(X, x))
+'''X = [
+    [896, 386], 
+    [947, 383], 
+    [947, 330], 
+    [897, 330]
+    ]#transposed
+x = [
+    [896, 387], 
+    [947, 384], 
+    [947, 321], 
+    [897, 321]
+    ]#transposed'''
+
+X = [
+    [896, 386], 
+    [947, 383], 
+    [947, 330], 
+    [897, 330]
+    ]#non-deformed
+x = [
+    [896, 386], 
+    [937, 383], 
+    [937, 330], 
+    [897, 330]
+    ]#deformed
+
+print(F(x, X))
+
+#xx: -
+#xy: +
+#yx: -
+#yy: -

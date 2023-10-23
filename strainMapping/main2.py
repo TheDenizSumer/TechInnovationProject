@@ -8,9 +8,6 @@ import math
 from statistics import mode
 
 '''
-
-
-
 import matplotlib.pyplot as plt
 import numpy as np
   

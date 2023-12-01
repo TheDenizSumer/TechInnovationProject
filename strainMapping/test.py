@@ -18,6 +18,37 @@ import matplotlib.pyplot as plt
 import math
 from statistics import mode
 
+#graph to video
+import cv2
+import numpy as np
+import glob
+
+UP = '\033[1A'
+CLEAR = '\x1b[2K'
+
+
+def loadingBar(percent, length):
+        percent = float(percent)
+        length = float(length)
+        numOfSpaces = int(str(percent/(100/length)).split('.')[0])
+        numofnoSpaces = length - numOfSpaces
+        x = 0
+        shadedSpaces = []
+        nonShadedSpaces = []
+        while x != numOfSpaces:
+            x = x + 1
+            shadedSpaces.append(' ')
+
+        x = 0
+        while x != numofnoSpaces:
+            x = x + 1
+            nonShadedSpaces.append(' ')
+
+        shadedSpaces = ''.join(shadedSpaces)
+        nonShadedSpaces = ''.join(nonShadedSpaces)
+        progressBar = '|' + '\x1b[0;31;41m' + shadedSpaces + '\x1b[0m'+ nonShadedSpaces +'|' + str(percent) + '%'
+        return progressBar
+
 ##############################################
 
 def Calc_centroid(p1, p2, p3, p4):
@@ -41,8 +72,8 @@ def F(transposed, origin):
 
     #u(x, y) = function of x & y returns relative x displacment in element
     #v(x, y) = function of x & y returns relative y displacment in element
+    #tx, ty = Calc_centroid(transposed[0], transposed[1], transposed[2], transposed[3])
     tx, ty = Calc_centroid(origin[0], origin[1], origin[2], origin[3])
-
 
     xx = float(diff(u, x).replace(y, ty))
     xy = float(diff(u, y).replace(x, tx))
@@ -122,8 +153,12 @@ def calc_coordinates(video, frame_cap=0, remove_frames=True):
     #processing images to extract coordinates and countour information
     information = []
     dot_num = mode(countnum)
-    print(dot_num)
+    print('\nCalculating Points...\n')
+    IMGNUM = 0
     for image in images:
+        IMGNUM += 1
+        print(UP, end=CLEAR)
+        print(loadingBar(int(IMGNUM/len(images)*100), 100))
         contours = get_contours(dilate(getColorMask(image)))
         if len(contours) != dot_num and remove_frames:
             continue
@@ -132,7 +167,7 @@ def calc_coordinates(video, frame_cap=0, remove_frames=True):
         init_points = 0
         for cnt in contours:
             x,y,w,h=cnt
-            cX, cY = x+int(w/2), y+int(h/2)
+            cX, cY = x+int(w/2), -(y+int(h/2))
             cont.append([init_points, cX, cY])
             init_points += 1
 
@@ -158,7 +193,7 @@ def calc_coordinates(video, frame_cap=0, remove_frames=True):
         else:
             information.append(cont)
 
-
+    print(f'Number of dots detected: {dot_num}')
     return information, images
 
 ##############################################
@@ -170,6 +205,7 @@ def elements(T, NT, squares, direction=None):
         #et = [T[element[0]], T[element[1]], T[element[2]], T[element[3]]]
         #e = [NT[element[0]], NT[element[1]], NT[element[2]], NT[element[3]]]
         et = [T[element[0]][1:], T[element[1]][1:], T[element[2]][1:], T[element[3]][1:]]
+
         e = [NT[element[0]][1:], NT[element[1]][1:], NT[element[2]][1:], NT[element[3]][1:]]
 
         x, y = F(et, e)
@@ -201,97 +237,107 @@ squares = [
 
 ##############################################
 
-coordinates, images = calc_coordinates('deform_purple.mov', 135)
+#coordinates, images = calc_coordinates('deform_purple.mov', frame_cap=135)
+coordinates, images = calc_coordinates('deform_purple.mov')
+coordinates = coordinates[:-7]
 #frame cap 135
 #calculates coordinates and images
+# I suggest ommiting the last 7 frames
 
 ##############################################
 
-#def grad ofa  range of frames
 Elements = [] # frames, e1 e2 e3 e4 e5... e27, [xx xy], [yx yy]
 Centroids = [] # frames, e1 e2 e3 e4 e5... e27, x y
-
+print('\nCalculating Deformation In Elements...\n')
 for frame in range(1, len(coordinates)):
-    print(frame)
+#for frame in range(3):
+    print(UP, end=CLEAR)
+    print(loadingBar(int(frame/(len(coordinates)-1)*100), 100))
     element, centroid = elements(coordinates[frame], coordinates[frame-1], squares)
+    #element = elementS[frame]
+    if frame != 1:
+      for i in range(len(element)):
+        for x in range(2):
+          for y in range(2):
+            element[i][x][y] = element[i][x][y] + Elements[-1][i][x][y]
     Elements.append(element)
     Centroids.append(centroid)
+#for i in Elements:
+#  print(i[0][1][1])
 
 ##############################################
-
+print('\nCalculating Values...\n')
 master = []
 for i in Elements:
-  for x in i:
-    master.append(round(x[1][1], 6))
+    for x in i:
+        master.append(round(x[1][1], 6))
 
+print()
+#smallest_strain = np.percentile(master, 80)
+#largest_strain = np.percentile(master, 20)
 smallest_strain = min(master)
 largest_strain = max(master)
+#smallest_strain = -0.028964
+#largest_strain = 0.027823
+print(smallest_strain, largest_strain)
 
 ##############################################
 
 matrix_dimentions = 2, 8
 Z = []
+
+print('\nFormatting Matrix...\n')
 frame = 0
-for i in range(matrix_dimentions[0]):
-    Z.append([])
-    for q in range(matrix_dimentions[1]):
-        Z[-1].append(Elements[frame][q+i*(matrix_dimentions[1])][1][1])
-        #Z[-1].append(def_element[q+i*(matrix_dimentions[1])][0][0])
-Z = np.array(Z)
+for frame in range(len(Elements)):
+    g = []
+    print(UP, end=CLEAR)
+    print(loadingBar(int(frame/(len(Elements)-1)*100), 100))
+    for i in range(matrix_dimentions[0]-1):
+        for q in range(matrix_dimentions[1]):
+            g.append(Elements[frame][q+i*(matrix_dimentions[1])][1][1])
+            #general strain
+            #yy = Elements[frame][q+i*(matrix_dimentions[1])][1][1]
+            #xx = Elements[frame][q+i*(matrix_dimentions[1])][0][0]
+            #gs = math.sqrt(xx**2 + yy**2)
+            #Z.append(gs)
+    g = np.array(g, dtype='float')
+    Z.append(g)
 
 ##############################################
 
-print(smallest_strain,largest_strain)
-
-
-steps = 12
-
-strain_step = (largest_strain - smallest_strain)/steps
-
-calc_levels = []
-
-for i in range(steps):
-    calc_levels.append(smallest_strain + strain_step*i)
-
-print(calc_levels)
-
-calc_colors = ['#FF0000', '#FF4500', '#FFA500', '#FFAE42', '#FFFF00', "#9ACD32", '#00FF00', '#00FFA2', '#0000FF', '#8A2BE2', '#7F00FF', '#190033']
-
-cs = plt.contourf(Z, levels=calc_levels,
-    colors=calc_colors, extend='both')
-cs.cmap.set_over('red')
-cs.cmap.set_under('blue')
-cs.changed()
-
-plt.show()
+levels = np.arange(smallest_strain, largest_strain, 0.0025)
+print('\nCreating Contour Plots...\n')
+frame=0
+for element in Z:
+    print(UP, end=CLEAR)
+    print(loadingBar(int(frame/(len(Z)-1)*100), 100))
+    y = element.reshape(4, 2)
+    fig, ax = plt.subplots()
+    CS = ax.contourf(y, levels, cmap='CMRmap')
+    CB = fig.colorbar(CS, shrink=1)
+    List = ax.clabel(CS, colors='black', fontsize=10, inline=False)
+    ax.set_title('Deformation')
+    fig.savefig(f"strainMapping/eachFrame/frame{frame}.png")
+    #plt.clabel(CS, *args, **kwargs)
+    frame += 1
 
 ##############################################
 
-import matplotlib.pyplot as plt
-plt.style.use('seaborn-white')
-import numpy as np
+print('\nCreating Video...\n')
+img_array = []
+for x in range(209):
+    print(UP, end=CLEAR)
+    print(loadingBar(int(x/(len(Z)-1)*100), 100))
+    filename = f'strainMapping/eachFrame/frame{x}.png'
+    img = cv2.imread(filename)
+    height, width, layers = img.shape
+    size = (width,height)
+    img_array.append(img)
 
-##############################################
+out = cv2.VideoWriter('video7.avi',cv2.VideoWriter_fourcc(*'DIVX'), 14, size)
 
-def f(x, y):
-    return np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
+for i in range(len(img_array)):
+   out.write(img_array[i])
+out.release()
 
-##############################################
-
-x = np.linspace(0, 5, 50)
-y = np.linspace(0, 5, 40)
-
-##############################################
-
-X, Y = np.meshgrid(x, y)
-Z = f(X, Y)
-
-##############################################
-
-plt.contour(X, Y, Z, colors='black')
-plt.show()
-
-##############################################
-
-plt.contour(X, Y, Z, 20, cmap='RdGy')
-plt.show()
+#2mins 10 seconds to run :_(

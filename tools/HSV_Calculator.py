@@ -22,7 +22,7 @@ def hsv_calc():
     cv2.createTrackbar("us","Trackbars",255,255,nothing)
     cv2.createTrackbar("uv","Trackbars",255,255,nothing)
     while True:
-        cap = cv2.VideoCapture('H:\python\TechInnovationProject\pics_videos_otherstuff\video\deform_purple.mov')
+        cap = cv2.VideoCapture('H:\python\TechInnovationProject\deform_purple.mov')
 
         frame_width = int(cap.get(3))
         frame_height = int(cap.get(4))

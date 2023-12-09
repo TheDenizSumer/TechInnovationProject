@@ -10,7 +10,6 @@ from sympy import symbols, diff
 import numpy as np
 
 #main
-import math
 import numpy as np
 import cv2
 import os

@@ -22,20 +22,20 @@ def hsv_calc():
     cv2.createTrackbar("us","Trackbars",255,255,nothing)
     cv2.createTrackbar("uv","Trackbars",255,255,nothing)
     while True:
-        cap = cv2.VideoCapture('H:\python\TechInnovationProject\deform_purple.mov')
+        cap = cv2.VideoCapture('C:\\Users\\deniz\\Desktop\\Python\\TechInnovationProject\\Deform_stick.MOV')
 
         frame_width = int(cap.get(3))
         frame_height = int(cap.get(4))
         
         size = (frame_width, frame_height)
-
+        print(size)
         if (cap.isOpened()== False): 
             print("Error opening video stream or file")
 
         ret, frame = cap.read()
         #frame = cv2.imread('candy.jpg')
         height, width = frame[-1].shape[:2]
-        #frame = cv2.resize(frame,(width/5, height/5), interpolation = cv2.INTER_CUBIC)
+        frame = cv2.resize(frame, (int(frame_width/4), int(frame_height/4)))
         hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
 
         lh = cv2.getTrackbarPos("lh","Trackbars")

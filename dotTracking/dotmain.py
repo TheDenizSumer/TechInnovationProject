@@ -4,15 +4,17 @@ import os
 import math 
 
 def getColorMask(img):
-    #[
-    #lower = np.array([34, 174, 136])
-    #upper = np.array([54, 194, 216])
-    #DICex
-    #522 103     
-    # 8/22 [ 36 219  84] [  6 199  44] [ 66 239 124]
-    #8/23 [ 42 255  35] [ 12 235  -5] [ 72 275  75]
+    #deform_purple
+    '''
     lower = np.array([ 9, 161, 38] ) 
     upper = np.array([ 62, 255,  83])
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    out  = cv2.inRange(hsv, lower, upper)'''
+    #Deform_stick.MOV
+    #lower = np.array([0, 0, 0]) 
+    #upper = np.array([5, 255,  109])
+    lower = np.array([0, 0, 0]) 
+    upper = np.array([9, 255,  76])
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     out  = cv2.inRange(hsv, lower, upper)
     #cv2.imshow("out", out)
@@ -41,7 +43,7 @@ def distance(x, y, px, py):
 
 
 
-cap = cv2.VideoCapture('deform_purple.mov')
+cap = cv2.VideoCapture('Deform_stick.MOV')
 
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
@@ -58,14 +60,13 @@ while(cap.isOpened()):
     
     if ret == True:
         #cv2.imshow('Frame',frame)
-        #frame = cv2.resize(frame, (960, 540))
+        frame = cv2.resize(frame, (960, 540))
         #if len(get_contours(dilate(getColorMask(frame)))) == 27:
         images.append(frame)
         frames += 1
         #if cv2.waitKey(25) & 0xFF == ord('q'):
         #    break
-        if frames == 135:
-            break
+        print(frames)
     else: 
         break
 if len(images) != frames:
